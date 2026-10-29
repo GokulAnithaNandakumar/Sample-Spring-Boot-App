@@ -1,0 +1,9 @@
+/Users/gokulnandakumar/Developer/github_push/HON-Spring-Boot-App/backend/src/main/java/com/example/backend/BackendApplication.java
+/Users/gokulnandakumar/Developer/github_push/HON-Spring-Boot-App/backend/src/main/java/com/example/backend/config/CorsConfig.java
+/Users/gokulnandakumar/Developer/github_push/HON-Spring-Boot-App/backend/src/main/java/com/example/backend/controller/PrimaryController.java
+/Users/gokulnandakumar/Developer/github_push/HON-Spring-Boot-App/backend/src/main/java/com/example/backend/dto/ForeignRequest.java
+/Users/gokulnandakumar/Developer/github_push/HON-Spring-Boot-App/backend/src/main/java/com/example/backend/dto/PrimaryRequest.java
+/Users/gokulnandakumar/Developer/github_push/HON-Spring-Boot-App/backend/src/main/java/com/example/backend/entity/ForeignEntity.java
+/Users/gokulnandakumar/Developer/github_push/HON-Spring-Boot-App/backend/src/main/java/com/example/backend/entity/PrimaryEntity.java
+/Users/gokulnandakumar/Developer/github_push/HON-Spring-Boot-App/backend/src/main/java/com/example/backend/repository/PrimaryRepository.java
+/Users/gokulnandakumar/Developer/github_push/HON-Spring-Boot-App/backend/src/main/java/com/example/backend/service/PrimaryService.java

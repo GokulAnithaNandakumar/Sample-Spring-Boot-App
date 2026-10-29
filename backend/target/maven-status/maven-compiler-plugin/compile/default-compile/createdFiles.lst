@@ -1,0 +1,9 @@
+com/example/backend/controller/PrimaryController.class
+com/example/backend/dto/ForeignRequest.class
+com/example/backend/dto/PrimaryRequest.class
+com/example/backend/BackendApplication.class
+com/example/backend/repository/PrimaryRepository.class
+com/example/backend/entity/ForeignEntity.class
+com/example/backend/service/PrimaryService.class
+com/example/backend/config/CorsConfig.class
+com/example/backend/entity/PrimaryEntity.class
