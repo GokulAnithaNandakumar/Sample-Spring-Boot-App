@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import * as api from "../services/primaryService";
 
 const emptyForm = {
@@ -18,6 +19,7 @@ export default function PrimaryRecordForm() {
   const [tagInput, setTagInput] = useState("");
   const [child, setChild] = useState({ value: "", quantity: "", active: true });
   const [patchStatus, setPatchStatus] = useState("ACTIVE");
+  const selectedRecord = records.find((r) => r.uid === selectedUid);
 
   const loadAll = async () => {
     setLoading(true);
@@ -233,12 +235,46 @@ export default function PrimaryRecordForm() {
         )}
       </form>
 
+      {selectedRecord && (
+        <section className="detail">
+          <h2>Selected Record Details (uid {selectedRecord.uid})</h2>
+          <p><strong>Name:</strong> {selectedRecord.name}</p>
+          <p><strong>Description:</strong> {selectedRecord.description}</p>
+          <p><strong>Age:</strong> {selectedRecord.age}</p>
+          <p><strong>Score:</strong> {selectedRecord.score}</p>
+          <p><strong>Active:</strong> {String(selectedRecord.active)}</p>
+          <p><strong>Gender:</strong> {selectedRecord.gender}</p>
+          <p><strong>Birth Date:</strong> {selectedRecord.birthDate}</p>
+          <p><strong>Reminder Time:</strong> {selectedRecord.reminderTime}</p>
+          <p><strong>Event Date Time:</strong> {selectedRecord.eventDateTime}</p>
+          <p><strong>Tags:</strong> {(selectedRecord.tags || []).join(", ")}</p>
+          <p><strong>Priority:</strong> {selectedRecord.priority}</p>
+          <p><strong>Status:</strong> {selectedRecord.status}</p>
+          <p><strong>Country:</strong> {selectedRecord.country}</p>
+          <p><strong>Created:</strong> {selectedRecord.createdAt}</p>
+          <p><strong>Updated:</strong> {selectedRecord.updatedAt}</p>
+          <h3>Foreign Records</h3>
+          {(selectedRecord.foreignRecords || []).length === 0 ? (
+            <p>No foreign records.</p>
+          ) : (
+            <ol>
+              {selectedRecord.foreignRecords.map((c) => (
+                <li key={c.uid}>
+                  uid {c.uid} — {c.value} (qty {c.quantity}, active {String(c.active)})
+                </li>
+              ))}
+            </ol>
+          )}
+        </section>
+      )}
+
       <h2>Records</h2>
       {loading ? <p>Loading...</p> : records.length === 0 ? <p>No records found.</p> : (
         <ol>
           {records.map((r) => (
             <li key={r.uid}>
               <strong>{r.name}</strong> (uid {r.uid}) - {r.status}
+              <Link to={`/data/${r.uid}`}>View</Link>
               <button type="button" onClick={() => selectRecord(r)} disabled={submitting}>Edit</button>
               <button type="button" onClick={() => handleDelete(r.uid)} disabled={submitting}>Delete</button>
               <div>children: {r.foreignRecords ? r.foreignRecords.length : 0}</div>
