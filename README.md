@@ -1,4 +1,4 @@
-# HON Spring Boot App
+# Spring Boot App
 
 Simple educational full-stack app: Spring Boot backend, React frontend, PostgreSQL in Docker, pgAdmin.
 
