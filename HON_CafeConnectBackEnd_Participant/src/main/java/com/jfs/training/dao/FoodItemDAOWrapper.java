@@ -17,7 +17,7 @@ import com.jfs.training.entity.FoodItemEntity;
  * FoodItemDAO. It also handles conversion between entity and bean objects.
  */
 @Repository
-@Transactional
+@Transactional(transactionManager = "txManager")
 public class FoodItemDAOWrapper {
 
 	/* DAO for FoodItemEntity providing CRUD operations. */
@@ -68,7 +68,6 @@ public class FoodItemDAOWrapper {
 			bean.setCategory(entity.getCategory());
 			bean.setName(entity.getName());
 			bean.setPrice(entity.getPrice());
-			beanList.add(bean);
 		}
 
 

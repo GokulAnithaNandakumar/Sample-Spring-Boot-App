@@ -109,7 +109,7 @@ public class FoodItemServiceTest {
         List<FoodItemBean> foodItems=foodItemServiceImpl.getAllFoodItems();
       // TODO: Assert added item is present in the list
       Assertions.assertNotNull(foodItems);
-      boolean found=foodItems.stream().anyMatch(item->"pizza".equals(item.getName()));
+      boolean found=foodItems.stream().anyMatch(item->"Pizza".equals(item.getName()));
       Assertions.assertTrue(found , "Newly added food item should exists in the List");
       
     }
