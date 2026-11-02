@@ -17,7 +17,7 @@ import com.jfs.training.entity.FoodItemEntity;
  * FoodItemDAO. It also handles conversion between entity and bean objects.
  */
 @Repository
-@Transactional(transactionManager = "txManager")
+@Transactional
 public class FoodItemDAOWrapper {
 
 	/* DAO for FoodItemEntity providing CRUD operations. */
@@ -31,22 +31,9 @@ public class FoodItemDAOWrapper {
 	  -- Convert FoodItemBean To Entity and vice versa as applicable(Hint: Utilize provided utility methods) 
 	  -- Return the newly added food item.**/
 	public FoodItemBean addFoodItem(FoodItemBean bean) throws Exception {
-		FoodItemEntity entity=new FoodItemEntity();
-		entity.setName(bean.getName());
-		entity.setCategory(bean.getCategory());
-		entity.setAvailable(bean.getAvailable());
-		entity.setPrice(bean.getPrice());
-		FoodItemEntity savedFoodItemEntity=foodItemDAO.save(entity);
-		FoodItemBean savedBean=new FoodItemBean();
-		savedBean.setId(savedFoodItemEntity.getId());
-		savedBean.setAvailable(savedFoodItemEntity.getAvailable());
-		savedBean.setCategory(savedFoodItemEntity.getCategory());
-		savedBean.setName(savedFoodItemEntity.getName());
-		savedBean.setPrice(savedFoodItemEntity.getPrice());
-
-
-
-		return savedBean;
+		FoodItemEntity entity = convertFoodItemBeanToEntity(bean);
+		FoodItemEntity savedFoodItemEntity = foodItemDAO.save(entity);
+		return convertFoodItemEntityToBean(savedFoodItemEntity);
 	}
 
     
@@ -62,12 +49,7 @@ public class FoodItemDAOWrapper {
 		List<FoodItemEntity>entities=foodItemDAO.findAll();
 		List<FoodItemBean>beanList=new ArrayList<>();
 		for(FoodItemEntity entity:entities){
-			FoodItemBean bean=new FoodItemBean();
-			bean.setId(entity.getId());
-			bean.setAvailable(entity.getAvailable());
-			bean.setCategory(entity.getCategory());
-			bean.setName(entity.getName());
-			bean.setPrice(entity.getPrice());
+			beanList.add(convertFoodItemEntityToBean(entity));
 		}
 
 
