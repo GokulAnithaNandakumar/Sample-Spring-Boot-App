@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class OrderDaoWrapper {
@@ -31,7 +32,7 @@ public class OrderDaoWrapper {
         return orders;
     }
 
-    public java.util.Optional<OrderBean> findById(Integer id) {
+    public Optional<OrderBean> findById(Integer id) {
         return orderRepository.findById(id).map(OrderDaoWrapper::convertEntityToBean);
     }
 
@@ -43,16 +44,6 @@ public class OrderDaoWrapper {
         orderRepository.deleteById(id);
     }
 
-    // Requirement 1:
-    // TODOs:
-    // - Implement the addOrder method.
-    // - Convert OrderBean to OrderEntity.
-    // - Calculate the total cost based on burger name, quantity, and prices:
-    //   Veg-Burger = 100, Chicken-Burger = 200, Veg-CrunchBurger = 150, Chicken-CrunchBurger = 250
-    // - Throw BurgerNameMismatchException for an invalid burger name.
-    // - Set the calculated total cost and save the order.
-    // - Convert the saved OrderEntity back to OrderBean.
-    // - Return the updated OrderBean.
     public OrderBean addOrder(OrderBean burgerBean) {
         OrderEntity entity = convertBeanToEntity(burgerBean);
         double price;
@@ -79,13 +70,6 @@ public class OrderDaoWrapper {
         return convertEntityToBean(savedOrder);
     }
 
-    // Requirement 2:
-    // TODOs:
-    // - Implement the getOrdersList method.
-    // - Fetch all orders from the repository.
-    // - Convert each OrderEntity into OrderBean.
-    // - Add the converted OrderBean objects to a list.
-    // - Return the list of orders.
     public List<OrderBean> getOrdersList() {
         List<OrderBean> orders = new ArrayList<>();
         for (OrderEntity entity : orderRepository.findAll()) {
@@ -95,7 +79,8 @@ public class OrderDaoWrapper {
     }
 
     public OrderBean getOrder(Integer id) {
-        return orderRepository.findById(id).map(OrderDaoWrapper::convertEntityToBean)
+        return orderRepository.findById(id)
+            .map(OrderDaoWrapper::convertEntityToBean)
             .orElseThrow(() -> new com.hackerrank.burger.exception.OrderNotFoundException("Order not found: " + id));
     }
 
