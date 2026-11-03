@@ -44,6 +44,16 @@ public class OrderDaoWrapper {
         orderRepository.deleteById(id);
     }
 
+    // Requirement 1:
+    // TODOs:
+    // - Implement the addOrder method.
+    // - Convert OrderBean to OrderEntity.
+    // - Calculate the total cost based on burger name, quantity, and the following prices:
+    //   Veg-Burger = 100, Chicken-Burger = 200, Veg-CrunchBurger = 150, Chicken-CrunchBurger = 250
+    // - Throw BurgerNameMismatchException for an invalid burger name.
+    // - Set the calculated total cost and save the order.
+    // - Convert the saved OrderEntity back to OrderBean.
+    // - Return the updated OrderBean.
     public OrderBean addOrder(OrderBean burgerBean) {
         OrderEntity entity = convertBeanToEntity(burgerBean);
         double price;
@@ -70,6 +80,13 @@ public class OrderDaoWrapper {
         return convertEntityToBean(savedOrder);
     }
 
+    // Requirement 2:
+    // TODOs:
+    // - Implement the getOrdersList method.
+    // - Fetch all orders from the repository.
+    // - Convert each OrderEntity into OrderBean.
+    // - Add the converted OrderBean objects to a list.
+    // - Return the list of orders.
     public List<OrderBean> getOrdersList() {
         List<OrderBean> orders = new ArrayList<>();
         for (OrderEntity entity : orderRepository.findAll()) {

@@ -17,6 +17,13 @@ public class OrderAiService {
         this.promptProvider = promptProvider;
     }
 
+    // Requirement 3:
+    // TODOs:
+    // - Retrieve the order details for the provided order ID.
+    // - Build the order context using order ID, burger name, quantity, total cost, delivery address, order status, and order time.
+    // - Get the status message prompt from PromptProvider.
+    // - Pass the status message prompt and order context to OrderAiClient to generate the AI-based status message.
+    // - Create and return an AiResponse containing the order ID and the generated status message.
     public AiResponse generateStatusMessage(Integer orderId) {
         OrderEntity order = getOrder(orderId);
         String orderContext = String.format(
@@ -38,6 +45,13 @@ public class OrderAiService {
         return response;
     }
 
+    // Requirement 4:
+    // TODOs:
+    // - Retrieve the order details for the provided order ID.
+    // - Build the order context using order ID, burger name, quantity, total cost, delivery address, order status, and cancellation eligibility.
+    // - Get the cancellation advice prompt from PromptProvider.
+    // - Pass the cancellation advice prompt and order context to OrderAiClient to generate the AI-based cancellation advice.
+    // - Create and return an AiResponse containing the order ID and the generated cancellation advice.
     public AiResponse generateCancellationAdvice(Integer orderId) {
         OrderEntity order = getOrder(orderId);
         boolean cancellationEligible =
@@ -61,6 +75,11 @@ public class OrderAiService {
         return response;
     }
 
+    // Requirement 5:
+    // TODOs:
+    // - Retrieve the order from the repository using the provided order ID.
+    // - If the order exists, return the corresponding OrderEntity.
+    // - If not found, throw OrderNotFoundException with an appropriate message.
     private OrderEntity getOrder(Integer orderId) {
         return orderRepository.findById(orderId)
             .orElseThrow(() -> new com.hackerrank.burger.exception.OrderNotFoundException(
