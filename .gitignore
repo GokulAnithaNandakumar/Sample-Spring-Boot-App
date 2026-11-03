@@ -1,6 +1,5 @@
-/HON_CafeConnectBackEnd_Participant/target
-/burger-order-fullstack/frontend/node_modules
-/spring-ai/backend/target
-/burger-order-fullstack/backend/target
-/burger-order-fullstack/frontend/dist
-/burger-order-fullstack/frontend/dist
+# Build outputs and dependencies
+**/target
+**/node_modules
+**/dist
+**/.DS_Store
