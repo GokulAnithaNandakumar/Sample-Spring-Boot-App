@@ -39,13 +39,13 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public OrderBean getOrder(@PathVariable Integer id) {
+    public OrderBean getOrder(@PathVariable Long id) {
         return service.getOrderById(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOrder(@PathVariable Integer id) {
+    public void deleteOrder(@PathVariable Long id) {
         service.deleteOrder(id);
     }
 }
