@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axios from 'axios';
+import { addOrder } from '../api.js';
 const burgerOptions=['Veg-Burger','Chicken-Burger','Veg-CrunchBurger','Chicken-CrunchBurger'];
 
 /** Provides a validated form for submitting a burger order. */
@@ -26,8 +26,8 @@ export default function AddBurger({onOrderAdded}) {
     setIsSubmitting(true);
     setErrorMessage('');
     try {
-      const response=await axios.post('/api/burgers/addOrder',{...form,quantity:Number(form.quantity)});
-      onOrderAdded?.(response.data);
+      const response=await addOrder({...form,quantity:Number(form.quantity)});
+      onOrderAdded?.(response);
       setForm({burgerName:'',quantity:'1',deliveryAddress:''});
     } catch(error) {
       const responseMessage=error.response?.data?.detail ?? error.response?.data?.message ?? error.response?.data;

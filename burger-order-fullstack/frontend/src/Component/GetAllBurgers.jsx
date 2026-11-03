@@ -1,16 +1,16 @@
 import React,{useEffect,useState} from 'react';
-import axios from 'axios';
+import { getOrders, deleteOrder as removeOrder } from '../api.js';
 export default function GetAllBurgers({refreshKey=0}) {
   const [orders,setOrders]=useState([]); const [loading,setLoading]=useState(true); const [error,setError]=useState('');
   async function loadOrders(){
     setLoading(true); setError('');
-    try { const response=await axios.get('/api/burgers/getAllOrders'); setOrders(response.data); }
+    try { const data=await getOrders(); setOrders(data); }
     catch { setError('Could not load orders. Make sure the Spring Boot backend is running.'); }
     finally { setLoading(false); }
   }
   useEffect(()=>{loadOrders();},[refreshKey]);
   async function deleteOrder(id){
-    try { await axios.delete(`/api/burgers/${id}`); setOrders(current=>current.filter(order=>order.id!==id)); }
+    try { await removeOrder(id); setOrders(current=>current.filter(order=>order.id!==id)); }
     catch { setError('Could not delete this order. Please try again.'); }
   }
   return <section className="panel">

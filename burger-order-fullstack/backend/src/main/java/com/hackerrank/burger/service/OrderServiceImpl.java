@@ -55,6 +55,43 @@ public class OrderServiceImpl implements OrderService {
         return dao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
     }
 
+    public OrderBean updateOrder(Long id, OrderBean order) {
+        OrderBean existing = getOrderById(id);
+        if (order.getBurgerName() != null) existing.setBurgerName(order.getBurgerName());
+        if (order.getQuantity() != null) existing.setQuantity(order.getQuantity());
+        if (order.getDeliveryAddress() != null) existing.setDeliveryAddress(order.getDeliveryAddress());
+        // recalculate total cost
+        double unitPrice = 0;
+        String name = existing.getBurgerName();
+        if ("Veg-Burger".equals(name)) unitPrice = 100;
+        else if ("Chicken-Burger".equals(name)) unitPrice = 200;
+        else if ("Veg-CrunchBurger".equals(name)) unitPrice = 150;
+        else if ("Chicken-CrunchBurger".equals(name)) unitPrice = 250;
+        else throw new com.hackerrank.burger.exception.BurgerNameMismatchException("Invalid burger name: " + name);
+        existing.setTotalCost(unitPrice * existing.getQuantity());
+        existing.setId(id);
+        return dao.save(existing);
+    }
+
+    public OrderBean patchOrder(Long id, OrderBean order) {
+        OrderBean existing = getOrderById(id);
+        if (order.getBurgerName() != null) existing.setBurgerName(order.getBurgerName());
+        if (order.getQuantity() != null) existing.setQuantity(order.getQuantity());
+        if (order.getDeliveryAddress() != null) existing.setDeliveryAddress(order.getDeliveryAddress());
+        if (order.getBurgerName() != null || order.getQuantity() != null) {
+            double unitPrice = 0;
+            String name = existing.getBurgerName();
+            if ("Veg-Burger".equals(name)) unitPrice = 100;
+            else if ("Chicken-Burger".equals(name)) unitPrice = 200;
+            else if ("Veg-CrunchBurger".equals(name)) unitPrice = 150;
+            else if ("Chicken-CrunchBurger".equals(name)) unitPrice = 250;
+            else throw new com.hackerrank.burger.exception.BurgerNameMismatchException("Invalid burger name: " + name);
+            existing.setTotalCost(unitPrice * existing.getQuantity());
+        }
+        existing.setId(id);
+        return dao.save(existing);
+    }
+
     public void deleteOrder(Long id) {
         if (!dao.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
