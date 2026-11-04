@@ -4,6 +4,8 @@ import com.hackerrank.burger.model.OrderBean;
 import com.hackerrank.burger.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,34 +32,44 @@ public class OrderController {
     }
 
     @PostMapping("/addOrder")
-    @ResponseStatus(HttpStatus.CREATED)
-    public OrderBean addOrder(@Valid @RequestBody OrderBean order) {
-        return service.addOrder(order);
+    public ResponseEntity<OrderBean> addOrder(@Valid @RequestBody OrderBean order) {
+        OrderBean saved = service.addOrder(order);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/addorder", produces = MediaType.TEXT_HTML_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> orderBurger(@RequestBody @Valid OrderBean bean, org.springframework.validation.Errors errors) {
+        if (errors.hasErrors()) {
+            return new ResponseEntity<>(errors.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
+        }
+        OrderBean savedOrder = service.addOrder(bean);
+        String response = "Order ID: " + savedOrder.getId() + ", Total Cost: " + savedOrder.getTotalCost();
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/getAllOrders")
-    public List<OrderBean> getAllOrders() {
-        return service.getAllOrders();
+    public ResponseEntity<List<OrderBean>> getAllOrders() {
+        return ResponseEntity.ok(service.getAllOrders());
     }
 
     @GetMapping("/{id}")
-    public OrderBean getOrder(@PathVariable Long id) {
-        return service.getOrderById(id);
+    public ResponseEntity<OrderBean> getOrder(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getOrderById(id));
     }
 
     @PutMapping("/{id}")
-    public OrderBean updateOrder(@PathVariable Long id, @Valid @RequestBody OrderBean order) {
-        return service.updateOrder(id, order);
+    public ResponseEntity<OrderBean> updateOrder(@PathVariable Long id, @Valid @RequestBody OrderBean order) {
+        return ResponseEntity.ok(service.updateOrder(id, order));
     }
 
     @PatchMapping("/{id}")
-    public OrderBean patchOrder(@PathVariable Long id, @RequestBody OrderBean order) {
-        return service.patchOrder(id, order);
+    public ResponseEntity<OrderBean> patchOrder(@PathVariable Long id, @RequestBody OrderBean order) {
+        return ResponseEntity.ok(service.patchOrder(id, order));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         service.deleteOrder(id);
+        return ResponseEntity.noContent().build();
     }
 }
