@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class OrderDaoWrapper {
@@ -32,8 +31,9 @@ public class OrderDaoWrapper {
         return orders;
     }
 
-    public Optional<OrderBean> findById(Integer id) {
-        return orderRepository.findById(id).map(OrderDaoWrapper::convertEntityToBean);
+    public OrderBean findById(Integer id) {
+        return orderRepository.findById(id).map(OrderDaoWrapper::convertEntityToBean)
+            .orElseThrow(() -> new com.hackerrank.burger.exception.OrderNotFoundException("Order not found: " + id));
     }
 
     public boolean existsById(Integer id) {

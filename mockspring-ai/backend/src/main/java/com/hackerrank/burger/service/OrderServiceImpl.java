@@ -39,8 +39,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderBean getOrderById(Integer id) {
-        return dao.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+        return dao.findById(id);
     }
 
     @Override
